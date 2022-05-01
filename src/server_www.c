@@ -29,7 +29,7 @@
 #include <string.h>
 
 // Konstanten definieren
-const char *DefaultPortNumber = "4711"; // Default-Protokoll-Port
+const char *DefaultPortNumber = "8080"; // Default-Protokoll-Port
 const int QueueLength = 10;             // Laenge der Request Queue
 
 // Macro um eine beliebige Datenstruktur (mittels Nullen) zu löschen
@@ -65,7 +65,7 @@ int main(int ArgumentCount, char *ArgumentValue[])
     char Buffer[1000];      // Daten-Buffer
     int Status;             // Status-Zwischenspeicher
     int Visits;             // bisherige Anzahl Verbindungen
-    int n;                  // Anzahl gelesene Bytes
+    int CharsReceived;                  // Anzahl gelesene Bytes
 
     /*
     Kommandozeile verarbeiten:
@@ -122,9 +122,13 @@ int main(int ArgumentCount, char *ArgumentValue[])
         printf("%d. Verbindung von %s, Port %d\n", Visits,
                inet_ntoa(ClientAddr.sin_addr), ntohs(ClientAddr.sin_port));
 
-        /**********************************************************************/
-        // HTTP-Request empfangen und anzeigen - Bitte ergänzen!
-        /**********************************************************************/
+        CharsReceived = recv(ConnectedSocket, Buffer, sizeof(Buffer), 0);
+        while (CharsReceived > 0)
+        {
+            Buffer[CharsReceived] = 0;
+            printf("%s", Buffer);
+            CharsReceived = recv(ConnectedSocket, Buffer, sizeof(Buffer), 0);
+        }
 
         // Daten-Buffer aufbereiten
         sprintf(Buffer, "Dies ist die %d. Verbindung.\n", Visits);

@@ -29,7 +29,7 @@
 #include <string.h>
 
 // Konstanten definieren
-const char DefaultPortNumber[] = "4711"; // Default-Protokoll-Port
+const char DefaultPortNumber[] = "8080"; // Default-Protokoll-Port
 const char LocalHost[] = "localhost";    // Default-Server-Name
 const char REQUEST[] = "GET / HTTP/1.0\r\nAccept: */*\r\nUser-Agent: client_www\r\n\r\n";
 
@@ -107,9 +107,16 @@ int main(int ArgumentCount, char *ArgumentValue[])
 
     freeaddrinfo(SrvInfo); // Wird nicht mehr gebraucht
 
-    /**********************************************************************/
-    // Request-Header senden - Bitte ergänzen!
-    /**********************************************************************/
+    int charAmount = 0;
+    char currentChar = 'A';
+    for ( charAmount = 0; currentChar != 0 ; charAmount++)
+    {
+        currentChar = REQUEST[charAmount];
+    }   
+    int messageLength = charAmount * sizeof(char);
+
+    send(CommunicationSocket, REQUEST, messageLength, 0);
+    
     ExitOnError(Status, "send fehlgeschlagen");
 
     // Wiederholt Daten vom Server lesen und am Bildschirm anzeigen
