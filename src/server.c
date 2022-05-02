@@ -118,7 +118,7 @@ int main(int ArgumentCount, char *ArgumentValue[])
 
         Visits++;
         printf("%d. Verbindung von %s, Port %d\n", Visits,
-               inet_ntoa(ClientAddr.sin_addr), ClientAddr.sin_port);
+               inet_ntoa(ClientAddr.sin_addr), ntohs(ClientAddr.sin_port));
 
         // Daten-Buffer aufbereiten
         sprintf(Buffer, "Dies ist die %d. Verbindung.\n", Visits);
