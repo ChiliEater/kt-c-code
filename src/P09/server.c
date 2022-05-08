@@ -3,7 +3,7 @@
 
  Program:   server
 
- Zweck:     Erzeugt einen Socket und führt wiederholt aus:
+ Zweck:     Erzeugt einen Socket und fï¿½hrt wiederholt aus:
               1) Warte auf eine Verbindung von einem Client
               2) Sende eine Meldung an den Client
               3) Beende die Verbindung
@@ -39,7 +39,7 @@ const int DefaultPortNumber = 4711;      /* Default-Protokoll-Port       */
 const int QueueLength = 10;              /* Laenge der Request Queue     */
 const int BufferSize = 1000;
 
-/* Macro um eine beliebige Datenstruktur (mittels Nullen) zu löschen     */
+/* Macro um eine beliebige Datenstruktur (mittels Nullen) zu lï¿½schen     */
 #define ClearMemory(s) memset((char*)&(s),0,sizeof(s))
 
 /* Prozedur zur Fehlerabfrage und Behandlung                             */
@@ -61,16 +61,16 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
 
    typedef struct sockaddr* SockAddrPtr; /* Pointer auf sockaddr         */
 
-   /* Struktur für Server-Adresse und Pointer für Parameter-Übergabe     */
+   /* Struktur fï¿½r Server-Adresse und Pointer fï¿½r Parameter-ï¿½bergabe     */
    struct sockaddr_in ServerAddr; 
    const  SockAddrPtr ServerAddrPtr = (SockAddrPtr)&ServerAddr;
 
-   /* Struktur für Client-Adresse und Pointer für Parameter-Übergabe     */
+   /* Struktur fï¿½r Client-Adresse und Pointer fï¿½r Parameter-ï¿½bergabe     */
    struct sockaddr_in ClientAddr;
    const  SockAddrPtr ClientAddrPtr = (SockAddrPtr)&ClientAddr;
    
-   int             ListeningSocket;    /* Socket für Verbindungsaufbau   */
-   int             ConnectedSocket;    /* Socket für Datenübertragung    */
+   int             ListeningSocket;    /* Socket fï¿½r Verbindungsaufbau   */
+   int             ConnectedSocket;    /* Socket fï¿½r Datenï¿½bertragung    */
    int             UntestedPort;       /* Port Nummer (wie eingegeben)   */
    unsigned short  Port;               /* Protokoll-Port-Nummer          */
    unsigned        AddrLen;            /* Laenge der Adresse             */
@@ -88,31 +88,31 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
   /*
    Kommandozeile verarbeiten:
 
-   Falls eine Port-Nummer angegeben wurde, soll diese für das Protokoll
+   Falls eine Port-Nummer angegeben wurde, soll diese fï¿½r das Protokoll
    verwendet werden, sonst der Default-Wert (Konstante DefaultPortNumber).
-   Falls der Wert ungültig ist, wird das Programm mit einer Fehlermeldung
+   Falls der Wert ungï¿½ltig ist, wird das Programm mit einer Fehlermeldung
    beendet, sonst wird der Wert in der Variablen Port abgelegt.
    */
 
    if (ArgumentCount > 1) {            /* Falls Port-Parameter angegeben */
-      UntestedPort = atoi(ArgumentValue[1]);     /* String binär wandeln */
+      UntestedPort = atoi(ArgumentValue[1]);     /* String binï¿½r wandeln */
    } else {
       UntestedPort = DefaultPortNumber;  /* sonst Default-Port verwenden */
    }
 
    if (UntestedPort>0 && UntestedPort<65536) { /* gueltige Port-Nummer?  */
-      Port = (unsigned short) UntestedPort;  /* Typ anpassen, übernehmen */
+      Port = (unsigned short) UntestedPort;  /* Typ anpassen, ï¿½bernehmen */
    }
    else {                          /* Fehlermeldung ausgeben und beenden */
-      fprintf(stderr, "Ungültige Port-Nummer %d\n", UntestedPort);
+      fprintf(stderr, "Ungï¿½ltige Port-Nummer %d\n", UntestedPort);
       exit(1);
    }
 
-   /* Socket für Verbindungsaufbau erzeugen                              */
+   /* Socket fï¿½r Verbindungsaufbau erzeugen                              */
    ListeningSocket = socket(PF_INET, SOCK_STREAM, 0);
    ExitOnError(ListeningSocket, "socket fehlgeschlagen\n");
  
-   /* Server Adresse und Port für den Dienst (Protokoll) definieren      */
+   /* Server Adresse und Port fï¿½r den Dienst (Protokoll) definieren      */
    ClearMemory(ServerAddr);                 /* Alles mit Nullen loeschen */
    ServerAddr.sin_family = AF_INET;         /* Address Family InterNET   */
    ServerAddr.sin_addr.s_addr = INADDR_ANY; /* Beliebiges Interface      */
@@ -122,7 +122,7 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
    Status = bind(ListeningSocket, ServerAddrPtr, sizeof(ServerAddr));
    ExitOnError(Status, "bind fehlgeschlagen\n");
 
-   /* Socket in passiv Modus versetzen und Warteschlagengrösse festlegen */   
+   /* Socket in passiv Modus versetzen und Warteschlagengrï¿½sse festlegen */   
    Status = listen(ListeningSocket, QueueLength);
    ExitOnError(Status, "listen fehlgeschlagen\n");
 
@@ -131,7 +131,7 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
 
    while (1) { /* Server Loop */
 
-      AddrLen = sizeof(ClientAddr);     /* ... wird von accept verändert */
+      AddrLen = sizeof(ClientAddr);     /* ... wird von accept verï¿½ndert */
 
    /* Auf Client-Verbindung (connect) warten                             */
       ConnectedSocket = accept(ListeningSocket, ClientAddrPtr, &AddrLen);
@@ -141,6 +141,7 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
       printf("%d. Verbindung von %s, Port %d\n",
              Visits, inet_ntoa(ClientAddr.sin_addr), ntohs(ClientAddr.sin_port));
 
+      wait("Text");
    /* Daten-Buffer aufbereiten                                           */
       sprintf(Buffer,"Dies ist die %d. Verbindung.\n",Visits);
 

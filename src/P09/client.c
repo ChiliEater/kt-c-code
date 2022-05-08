@@ -40,7 +40,7 @@ const int  DefaultPortNumber = 4711;    /* Default-Protokoll-Port        */
 const char LocalHost[] = "localhost";   /* Default-Server-Name           */
 const int	 Buffersize = 1000;
 
-/* Macro um eine beliebige Datenstruktur (mittels Nullen) zu löschen     */
+/* Macro um eine beliebige Datenstruktur (mittels Nullen) zu lï¿½schen     */
 #define ClearMemory(s) memset((char*)&(s), 0, sizeof(s))
 
 /* Prozedur zur Fehlerabfrage und Behandlung                             */
@@ -62,14 +62,14 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
 
    typedef struct sockaddr* SockAddrPtr; /* Pointer auf sockaddr         */
 
-   /* Struktur für Server-Adresse und Pointer für Parameter-Übergabe     */
+   /* Struktur fï¿½r Server-Adresse und Pointer fï¿½r Parameter-ï¿½bergabe     */
    struct sockaddr_in ServerAddr; 
    const  SockAddrPtr ServerAddrPtr=(SockAddrPtr)&ServerAddr;
 
    const char*     ServerName;          /* Temp.Pointer auf Server-Namen */
-   struct hostent* HostEntryPtr;        /* Rückgabewert von gethostbyname: 
+   struct hostent* HostEntryPtr;        /* Rï¿½ckgabewert von gethostbyname: 
                                            Zeiger auf statische Struktur */
-   unsigned long   BinaryAddr;          /* Binäre Server-Adresse         */
+   unsigned long   BinaryAddr;          /* Binï¿½re Server-Adresse         */
    int             CommunicationSocket; /* Socket(-Descriptor)           */
    int             UntestedPort;        /* Port-Nummer (wie eingegeben)  */
    unsigned short  Port;                /* Protokoll-Port-Nummer         */
@@ -99,13 +99,13 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
 
    /*
    Es wird versucht die numerische oder symbolische angegebene Server-
-   Adresse in eine binäre Adresse umzuwandeln. Falls dies nicht gelingt,
+   Adresse in eine binï¿½re Adresse umzuwandeln. Falls dies nicht gelingt,
    wird das Programm mit einer Fehlermeldung beendet, sonst wird der
    Wert in der Variablen "BinaryAddr" abgelegt.
-   Anmerkung: Unter Unix genügt gethostbyname (inet_addr ist unnötig)    */
+   Anmerkung: Unter Unix genï¿½gt gethostbyname (inet_addr ist unnï¿½tig)    */
    
    /* 1.Versuch: Numerische IP-Adresse?
-      Anmerkung: Unter Unix genügt gethostbyname (inet_addr ist unnötig) */
+      Anmerkung: Unter Unix genï¿½gt gethostbyname (inet_addr ist unnï¿½tig) */
    BinaryAddr = inet_addr(ServerName);
    if (BinaryAddr == INADDR_NONE) {
 
@@ -123,27 +123,27 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
    /*
    2. Parameter der Kommandozeile verarbeiten:
 
-   Falls eine Port-Nummer angegeben wurde, soll diese für das Protokoll
+   Falls eine Port-Nummer angegeben wurde, soll diese fï¿½r das Protokoll
    verwendet werden, sonst der Default-Wert (Konstante DefaultPortNumber).
-   Falls der Wert ungültig ist, wird das Programm mit einer Fehlermeldung
+   Falls der Wert ungï¿½ltig ist, wird das Programm mit einer Fehlermeldung
    beendet, sonst wird der Wert in der Variablen Port abgelegt.
    */
 
    if (ArgumentCount > 2) {            /* Falls Port-Parameter angegeben */
-      UntestedPort = atoi(ArgumentValue[2]);     /* String binär wandeln */
+      UntestedPort = atoi(ArgumentValue[2]);     /* String binï¿½r wandeln */
    } else {
       UntestedPort = DefaultPortNumber;             /* Default verwenden */
    }
 
-   if (UntestedPort>0 && UntestedPort<65536) {  /* Port-Nummer gültig ?  */
-      Port = (unsigned short)UntestedPort;   /* Typ anpassen, übernehmen */
+   if (UntestedPort>0 && UntestedPort<65536) {  /* Port-Nummer gï¿½ltig ?  */
+      Port = (unsigned short)UntestedPort;   /* Typ anpassen, ï¿½bernehmen */
    }
    else {                                      /* Fehlermeldung und Ende */
-      fprintf(stderr, "Ungültige Port-Nummer %d\n", UntestedPort);
+      fprintf(stderr, "Ungï¿½ltige Port-Nummer %d\n", UntestedPort);
       exit(1);
    }
 
-   /* Socket für Verbindungsaufbau und Datentransfer erzeugen            */
+   /* Socket fï¿½r Verbindungsaufbau und Datentransfer erzeugen            */
    CommunicationSocket = socket(PF_INET, SOCK_STREAM, 0);
    ExitOnError(CommunicationSocket, "socket fehlgeschlagen\n");
 
@@ -157,6 +157,7 @@ int main(int ArgumentCount, char* ArgumentValue[]) {
    Status=connect(CommunicationSocket, ServerAddrPtr, sizeof(ServerAddr));
    ExitOnError(Status, "connect fehlgeschlagen\n");
 
+   wait("Text");
    /* Wiederholt Daten vom Server lesen und am Bildschirm anzeigen       */
    CharsReceived = recv(CommunicationSocket, Buffer, sizeof(Buffer), 0);
    while (CharsReceived > 0) {
